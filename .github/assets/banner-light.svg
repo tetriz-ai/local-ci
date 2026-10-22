@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="200" viewBox="0 0 880 200" role="img" aria-label="local-ci: run pull-request checks locally and record their results">
+  <!-- Copyright 2026 Workloom Solutions Private Limited. SPDX-License-Identifier: MIT -->
+  <rect width="880" height="200" fill="#f8fafc"/>
+  <text x="48" y="98" fill="#0f172a" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="64" font-weight="700">local-ci</text>
+  <text x="50" y="145" fill="#475569" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="20">Run pull-request checks locally. Record what passed.</text>
+  <g transform="translate(500 46)">
+    <rect width="100" height="44" rx="8" fill="#15803d"/>
+    <path d="M16 22 l8 8 16 -17" fill="none" stroke="#f8fafc" stroke-width="3" stroke-linecap="round"/>
+    <text x="49" y="28" fill="#f8fafc" font-family="ui-monospace, Menlo, monospace" font-size="14" font-weight="700">run</text>
+    <path d="M108 22 h22" stroke="#475569" stroke-width="2"/>
+    <rect x="138" width="100" height="44" rx="8" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="155" y="28" fill="#0f172a" font-family="ui-monospace, Menlo, monospace" font-size="14">stamp</text>
+  </g>
+</svg>

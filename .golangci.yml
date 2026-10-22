@@ -1,0 +1,36 @@
+# golangci-lint v2 configuration. Pinned to the version named in CONTRIBUTING.md
+# and the CI workflow so local and CI runs report identically.
+version: "2"
+
+linters:
+  # "standard" is the curated default set (errcheck, govet, ineffassign,
+  # staticcheck, unused). misspell and revive add prose and style checks.
+  default: standard
+  enable:
+    - misspell
+    - revive
+  settings:
+    revive:
+      rules:
+        # Keep revive's useful checks, but do not require a doc comment on every
+        # exported symbol: much of the exported surface is small vendored helpers
+        # and internal types where a mandated comment is noise. The public entry
+        # points (Checker, NewRunner, Stamper, …) are documented on their own.
+        - name: exported
+          disabled: true
+
+  exclusions:
+    rules:
+      # Preserve the exported sentinel name for API compatibility.
+      - linters: [staticcheck]
+        text: "ST1012"
+        path: stamper/notesstamper.go
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/tetriz-ai/local-ci

@@ -1,0 +1,16 @@
+# Binaries
+/local-ci
+/deps
+*.exe
+*.test
+*.out
+
+# Go build / tooling
+/dist/
+/output/
+
+# Editor / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store

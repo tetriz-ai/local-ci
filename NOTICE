@@ -1,0 +1,42 @@
+local-ci
+Copyright 2026 Workloom Solutions Private Limited
+
+This product is licensed under the MIT License (see LICENSE).
+
+This repository includes the following third-party material:
+
+- CODE_OF_CONDUCT.md is adapted from the Contributor Covenant, version 2.1,
+  https://www.contributor-covenant.org/version/2/1/code_of_conduct/,
+  licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/.
+
+The release binaries compile in the following (license texts travel with the
+binaries under third_party/licenses/, laid out by module import path; the Go
+standard library's license and patent grant are under third_party/licenses/go/):
+
+  github.com/enescakir/emoji                 MIT            https://github.com/enescakir/emoji/blob/v1.0.0/LICENSE
+  github.com/gobwas/glob                     MIT            https://github.com/gobwas/glob/blob/v0.2.3/LICENSE
+  github.com/google/go-github/v60/github     BSD-3-Clause   https://github.com/google/go-github/blob/v60.0.0/LICENSE
+  github.com/google/go-querystring/query     BSD-3-Clause   https://github.com/google/go-querystring/blob/v1.1.0/LICENSE
+  github.com/inconshreveable/mousetrap       Apache-2.0     https://github.com/inconshreveable/mousetrap/blob/v1.1.0/LICENSE
+  github.com/mattn/go-shellwords             MIT            https://github.com/mattn/go-shellwords/blob/v1.0.12/LICENSE
+  github.com/mohae/deepcopy                  MIT            https://github.com/mohae/deepcopy/blob/c48cc78d4826/LICENSE
+  github.com/pkg/errors                      BSD-2-Clause   https://github.com/pkg/errors/blob/v0.9.1/LICENSE
+  github.com/samber/lo                       MIT            https://github.com/samber/lo/blob/v1.52.0/LICENSE
+  github.com/spf13/cobra                     Apache-2.0     https://github.com/spf13/cobra/blob/v1.10.2/LICENSE.txt
+  github.com/spf13/pflag                     BSD-3-Clause   https://github.com/spf13/pflag/blob/v1.0.9/LICENSE
+  go.uber.org/multierr                       MIT            https://github.com/uber-go/multierr/blob/v1.10.0/LICENSE.txt
+  go.uber.org/zap                            MIT            https://github.com/uber-go/zap/blob/v1.27.1/LICENSE
+  golang.org/x/mod/semver                    BSD-3-Clause   https://cs.opensource.google/go/x/mod/+/v0.40.0:LICENSE
+  golang.org/x/oauth2                        BSD-3-Clause   https://cs.opensource.google/go/x/oauth2/+/v0.36.0:LICENSE
+  golang.org/x/sync/errgroup                 BSD-3-Clause   https://cs.opensource.google/go/x/sync/+/v0.22.0:LICENSE
+  golang.org/x/text                          BSD-3-Clause   https://cs.opensource.google/go/x/text/+/v0.41.0:LICENSE
+  golang.org/x/tools                         BSD-3-Clause   https://cs.opensource.google/go/x/tools/+/v0.49.0:LICENSE
+  google.golang.org/protobuf                 BSD-3-Clause   https://github.com/protocolbuffers/protobuf-go/blob/v1.36.12/LICENSE
+  gopkg.in/yaml.v3                           MIT AND Apache-2.0 https://github.com/go-yaml/yaml/blob/v3.0.1/LICENSE
+
+github.com/inconshreveable/mousetrap is linked only in the Windows builds (an
+indirect dependency of spf13/cobra on Windows); every target's archive ships the
+same third_party/ and NOTICE, so its license travels with all of them.
+
+Upstream PATENTS files accompany the corresponding module license where supplied.
+Release binaries are built with Go 1.27.3.

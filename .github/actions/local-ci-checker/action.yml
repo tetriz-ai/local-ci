@@ -1,0 +1,50 @@
+name: "local-ci stamp check"
+description: "Passes when the pull request's head commit carries a local-ci stamp recording the named check as successful for the matching base branch."
+inputs:
+  check:
+    required: true
+    description: "The local-ci stamp key to require (a checker name, e.g. proto_breaking)."
+runs:
+  using: composite
+  steps:
+    - name: Check local-ci stamp for ${{ inputs.check }}
+      shell: bash
+      env:
+        LCI_CHECK: ${{ inputs.check }}
+        HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        BASE_REF: ${{ github.event.pull_request.base.ref }}
+      run: |
+        set -euo pipefail
+
+        workflow_error() {
+          local message="$1"
+          message="${message//%/%25}"
+          message="${message//$'\r'/%0D}"
+          message="${message//$'\n'/%0A}"
+          printf '::error::%s\n' "$message"
+        }
+
+        note="$(git notes show "$HEAD_SHA" 2>/dev/null || true)"
+        if [ -z "$note" ]; then
+          workflow_error "No local-ci stamp on $HEAD_SHA. Run 'local-ci --pr <N>' locally to stamp the commit, then re-run."
+          exit 1
+        fi
+
+        stamp="$(printf '%s' "$note" | base64 --decode)"
+        commit_sha="$(printf '%s' "$stamp" | jq -r '.commitSha')"
+        base_branch="$(printf '%s' "$stamp" | jq -r '.baseBranch')"
+        status="$(printf '%s' "$stamp" | jq -r --arg k "$LCI_CHECK" '.checksStatus[$k]')"
+
+        if [ "$commit_sha" != "$HEAD_SHA" ]; then
+          workflow_error "Stamp is for $commit_sha, not the head commit $HEAD_SHA. Re-run local-ci on the latest commit."
+          exit 1
+        fi
+        if [ "$base_branch" != "$BASE_REF" ]; then
+          workflow_error "Stamp base branch '$base_branch' does not match the PR base '$BASE_REF'."
+          exit 1
+        fi
+        if [ "$status" != "true" ]; then
+          workflow_error "Check '$LCI_CHECK' is not recorded as passed in the stamp."
+          exit 1
+        fi
+        printf 'local-ci stamp records the required check as passed for %s.\n' "$HEAD_SHA"

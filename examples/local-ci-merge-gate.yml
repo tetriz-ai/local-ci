@@ -1,0 +1,54 @@
+# Protect .github/** with required CODEOWNERS review, or use a ruleset-required
+# workflow from a trusted ref: a PR can edit its own pull_request workflow.
+# Replace the action SHA placeholder with a reviewed commit from the public repository
+# before copying this template into .github/workflows/.
+# Example merge gate. It reads the local-ci stamp a contributor wrote locally and
+# passes the matching checks without re-running them. Make the "Require local-ci
+# stamp" job a required status check on the protected branch so a pull request
+# cannot merge until its head commit carries a local-ci stamp recording these checks
+# as passed. The stamp is honour-system — see the "Trust model" section of the
+# README: anyone with push access can write one, so this gate establishes that a
+# local run was recorded, not that it was unmodified.
+#
+# A contributor pushes a commit, then runs local-ci locally, which writes the stamp and
+# re-applies the "RunWorkflows" label. The push itself fires `synchronize` before
+# any stamp exists (that run is expected to fail); the label re-application is what
+# re-fires this gate once the stamp is present — which is why `labeled` is in the
+# trigger list below. Without it the gate would stay red until a manual re-run.
+name: local-ci merge gate
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+permissions:
+  contents: read
+jobs:
+  require-local-ci-stamp:
+    name: Require local-ci stamp
+    runs-on: ubuntu-latest
+    # This job has NO job-level `if`, on purpose. A required status check whose job
+    # is skipped is reported to branch protection as a PASS, so a conditional skip
+    # here would be a bypass: adding any unrelated label to an unstamped PR would
+    # skip the job and mark the required check green with no valid stamp. The job
+    # must always run and re-read the stamp — it passes when the stamp is present and
+    # fails closed when it is absent. Running on an unrelated label just re-confirms
+    # the true stamp state, which is harmless.
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Fetch git notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          auth="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')"
+          git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin "refs/notes/commits:refs/notes/commits"
+      # Require the checks this repository gates on. Add one step per checker.
+      - name: proto_breaking
+        uses: tetriz-ai/local-ci/.github/actions/local-ci-checker@REPLACE_WITH_TRUSTED_40_CHARACTER_COMMIT_SHA
+        with:
+          check: proto_breaking
+      - name: govulncheck
+        uses: tetriz-ai/local-ci/.github/actions/local-ci-checker@REPLACE_WITH_TRUSTED_40_CHARACTER_COMMIT_SHA
+        with:
+          check: govulncheck
