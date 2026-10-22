@@ -1,7 +1,7 @@
 # Protect .github/** with required CODEOWNERS review, or use a ruleset-required
 # workflow from a trusted ref: a PR can edit its own pull_request workflow.
-# Replace the action SHA placeholder with a reviewed commit from the public repository
-# before copying this template into .github/workflows/.
+# Review the pinned action commit before copying this template into .github/workflows/.
+# Update both action pins together when intentionally upgrading.
 # Example merge gate. It reads the local-ci stamp a contributor wrote locally and
 # passes the matching checks without re-running them. Make the "Require local-ci
 # stamp" job a required status check on the protected branch so a pull request
@@ -45,10 +45,10 @@ jobs:
           git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin "refs/notes/commits:refs/notes/commits"
       # Require the checks this repository gates on. Add one step per checker.
       - name: proto_breaking
-        uses: tetriz-ai/local-ci/.github/actions/local-ci-checker@REPLACE_WITH_TRUSTED_40_CHARACTER_COMMIT_SHA
+        uses: tetriz-ai/local-ci/.github/actions/local-ci-checker@d35fdd8a5a79361eac163562a6547d297baac6f8
         with:
           check: proto_breaking
       - name: govulncheck
-        uses: tetriz-ai/local-ci/.github/actions/local-ci-checker@REPLACE_WITH_TRUSTED_40_CHARACTER_COMMIT_SHA
+        uses: tetriz-ai/local-ci/.github/actions/local-ci-checker@d35fdd8a5a79361eac163562a6547d297baac6f8
         with:
           check: govulncheck

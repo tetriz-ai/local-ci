@@ -164,9 +164,8 @@ The GitHub Action reads a stamp on a pull request's head commit and passes when 
 records the required checks for the matching base branch. The [example merge gate](examples/local-ci-merge-gate.yml)
 is a template for adopters; it is deliberately outside this repository's active workflows.
 
-Replace the example's `REPLACE_WITH_TRUSTED_40_CHARACTER_COMMIT_SHA` with a reviewed, immutable
-40-character commit SHA from the public repository before activating the workflow. Fetch the notes from the
-base repository before running it. Use the `labeled` trigger too: local-ci re-applies the
+The example pins the action to an immutable 40-character commit SHA. Review the action
+and update that pin when intentionally upgrading. Fetch the notes from the base repository before running it. Use the `labeled` trigger too: local-ci re-applies the
 `RunWorkflows` label after stamping so the gate re-runs once the stamp exists.
 
 A required check alone does not protect its workflow definition. A `pull_request` workflow comes
