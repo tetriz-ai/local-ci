@@ -11,6 +11,8 @@ The demo replays captured output from the offline example; it does not run a Git
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Go 1.25+](https://img.shields.io/badge/Go-1.25%2B-00ADD8.svg)
 
+<a href="https://www.producthunt.com/products/agentic-workflow-kit?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-tetriz-engineering-kit" target="_blank" rel="noopener noreferrer"><img alt="Tetriz Engineering Kit  - Open-source tools for everything around AI coding | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1296838&amp;theme=light&amp;t=1793345913841"></a>
+
 Run a pull request's checks on your machine before asking to merge. local-ci records their results
 in a git note on the head commit, and its optional GitHub merge gate reads that record to avoid
 repeating the checks it covers.
